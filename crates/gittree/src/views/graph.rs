@@ -147,6 +147,8 @@ impl Render for GraphView {
             .child(
                 div()
                     .flex_1()
+                    .min_w_0()
+                    .truncate()
                     .child(caption(t!("graph.col_description").into_owned(), p)),
             )
             .children(
@@ -238,12 +240,22 @@ impl Render for GraphView {
                                 p.lanes,
                                 p.bg_app,
                             ))
-                            .children(ref_labels(repo, &commit.oid, p))
+                            // Labels and summary share one cell that clips, so a
+                            // long label never pushes the columns after it.
                             .child(
-                                div()
+                                h_flex()
                                     .flex_1()
-                                    .truncate()
-                                    .child(SharedString::from(commit.summary.clone())),
+                                    .min_w_0()
+                                    .overflow_hidden()
+                                    .gap_2()
+                                    .children(ref_labels(repo, &commit.oid, p))
+                                    .child(
+                                        div()
+                                            .flex_1()
+                                            .min_w_0()
+                                            .truncate()
+                                            .child(SharedString::from(commit.summary.clone())),
+                                    ),
                             )
                             .child(cell(
                                 COLUMNS[0],

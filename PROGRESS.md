@@ -663,7 +663,8 @@ Still needs a check by eye: the dialog with many commits, and a reword with a lo
 - View, Zoom In, Zoom Out and Actual Size (Cmd or Ctrl with =, + , − and 0), and "Zoom (%)" in Settings, scale the whole interface from 50% to 300% in steps of 10%. It is saved with the settings.
 - How: the views size everything through `crate::zoom::px`, which gives a length in `rem`. Each window sets its rem size to 16 px times the zoom on every render, so all of those lengths follow. The graph's painter scales its lanes, lines and dots by the same factor, and the kit's font size is multiplied by it.
 - A few places take real pixels: dialog widths use `zoom::scaled`, which multiplies by the zoom. The side panel widths and the Settings window's size stay in plain pixels, so at a high zoom the panels may need dragging wider.
-- Not checked on screen: how each view looks at 50% and 300%. Text in kit components that size themselves in plain pixels will not grow.
+- Looked at on screen (2026-10-18), by starting the app with its own data folder and capturing its window: the graph view with two tabs at 50%, 100% and 150%, dark, light and high contrast. Fixed from that: a long branch label pushed the author, date and hash columns out of line; the description header kept a minimum width and pushed the headers after it; the toolbar kept the traffic-light gap when the tab bar holds the lights; and the traffic-light gap shrank with the zoom.
+- Not yet seen: 300%, dialogs, the staging view and the diff at other zooms. Text in kit components that size themselves in plain pixels will not grow.
 
 ### Blame and file history (built)
 

@@ -302,11 +302,14 @@ impl Render for Workspace {
                         })),
                 )
         });
+        // Room for the traffic lights, unless the tab bar above has them.
+        let under_lights = crate::platform::MAC && self.app.read(cx).repos.len() < 2;
         let toolbar = h_flex()
             .h(px(48.))
             .flex_none()
-            // Room for the traffic lights.
-            .pl(px(if crate::platform::MAC { 84. } else { 12. }))
+            // The traffic lights do not zoom, so their room is in pixels.
+            .when(under_lights, |bar| bar.pl(gpui_kit::px(84.)))
+            .when(!under_lights, |bar| bar.pl(px(12.)))
             .pr_3()
             .gap(px(6.))
             .bg(p.bg_panel)

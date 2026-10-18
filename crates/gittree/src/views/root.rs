@@ -149,7 +149,8 @@ impl RootView {
                 .flex_none()
                 .h(px(32.))
                 // Room for the traffic lights, as the workspace toolbar has.
-                .when(crate::platform::MAC, |bar| bar.pl(px(80.)))
+                // The system draws them at one size, so this does not zoom.
+                .when(crate::platform::MAC, |bar| bar.pl(gpui_kit::px(80.)))
                 .bg(p.bg_panel)
                 .border_b_1()
                 .border_color(p.border)
